@@ -10,8 +10,12 @@ router.get('/', (req, res) => {
     // select title, contents from posts
     // db.select('*')
     //     .from('posts')
+    const q = req.query.limit
+    console.log('req query',req.query)
+    console.log('req limit',req.query.limit)
         db('accounts')
         .select('*')
+        .limit(req.query.limit)
         .then(posts => {
             res.status(200).json(posts);
         })
