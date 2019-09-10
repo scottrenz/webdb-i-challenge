@@ -13,9 +13,11 @@ router.get('/', (req, res) => {
     const q = req.query.limit
     console.log('req query',req.query)
     console.log('req limit',req.query.limit)
-        db('accounts')
+    console.log((!req.query.sortby ? '1' : req.query.sortby) + ' ' + (!req.query.sortdir ? 'asc' : req.query.sortdir))
+    db('accounts')
         .select('*')
-        .limit(req.query.limit)
+        .limit(req.query.limit ? req.query.limit : 99999999999999)
+        .orderByRaw((!req.query.sortby ? '1' : req.query.sortby) + ' ' + (!req.query.sortdir ? 'asc' : req.query.sortdir))
         .then(posts => {
             res.status(200).json(posts);
         })
